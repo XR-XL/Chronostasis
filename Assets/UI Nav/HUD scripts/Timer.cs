@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Timer : MonoBehaviour, IDataPersistence
 {
@@ -9,12 +10,19 @@ public class Timer : MonoBehaviour, IDataPersistence
     public float elapsedTime;
     public float gameTime;
 
-    private bool levelCompleted;
+    private void Start()
+    {
+        id = SceneManager.GetActiveScene().name;
+    }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        UpdateTime();
+        if (!GameManager.Instance.levelCompleted)
+        {
+            UpdateTime();
+        }
+        
     }
 
     private void UpdateTime()
@@ -43,9 +51,16 @@ public class Timer : MonoBehaviour, IDataPersistence
 
     public void SaveData(ref PlayerData data)
     {
-        data.timeElapsed = Mathf.Min(data.timeElapsed, this.elapsedTime);
-        data.gameTimeElapsed = Mathf.Min(data.gameTimeElapsed, this.gameTime);
-        if (levelCompleted && data.timeElapsed > this.elapsedTime)
-            data.levelTimeTracker.Add(id, elapsedTime);
+        if (GameManager.Instance.levelCompleted && data.timeElapsed > this.elapsedTime)
+        {
+            data.timeElapsed = this.elapsedTime;
+            data.gameTimeElapsed = this.gameTime;
+            data.sceneID = SceneManager.GetActiveScene().name;
+            if (data.levelTimeTracker.ContainsKey(SceneManager.GetActiveScene().name))
+            {
+                data.levelTimeTracker.Remove(SceneManager.GetActiveScene().name);
+            }
+            data.levelTimeTracker.Add(SceneManager.GetActiveScene().name, elapsedTime);
+        }
     }
 }

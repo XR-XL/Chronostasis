@@ -1,50 +1,45 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PauseMenu : MonoBehaviour
+public class LevelComplete : MonoBehaviour
 {
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField] private GameObject playerController;
     [SerializeField] private GameObject playerHUD;
     public static bool GameIsPaused = false;
-    public GameObject pauseMenuUI;
+    public GameObject levelCompleteUI;
+
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (GameManager.Instance.levelCompleted)
         {
-            if (GameIsPaused)
-            {
-                Resume();
-            }
-            else
-            {
-                Pause();
-            }
-            playerController.SetActive(!GameIsPaused); // disbales the character from moving, flips based on the current status
-
+            Pause();
         }
     }
 
     public void Resume()
     {
-        
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        pauseMenuUI.SetActive(false);
+        levelCompleteUI.SetActive(false);
         Time.timeScale = 1f;
         GameIsPaused = false;
         GameManager.Instance.UpdatePauseStatus(GameIsPaused); // updates singleton
-        playerController.SetActive(true); // always allows the player to act after they press resume
+        playerController.SetActive(true);
     }
+
     void Pause()
     {
-        
+
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        pauseMenuUI.SetActive(true);
+        levelCompleteUI.SetActive(true);
         Time.timeScale = 0f; // functionally pauses the game
         GameIsPaused = true;
         GameManager.Instance.UpdatePauseStatus(GameIsPaused);
+        playerController.SetActive(false);
     }
 
     public void GoToScene(string sceneName)
@@ -58,5 +53,4 @@ public class PauseMenu : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         Resume();
     }
-
 }

@@ -29,6 +29,14 @@ public class DataPersistenceManager : MonoBehaviour
         LoadLevel();
     }
 
+    private void FixedUpdate()
+    {
+        if (GameManager.Instance.levelCompleted)
+        {
+            SaveLevel();
+        }
+    }
+
     public void NewLevel()
     {
         this.playerData = new PlayerData();

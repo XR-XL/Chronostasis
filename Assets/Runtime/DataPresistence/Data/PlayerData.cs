@@ -8,9 +8,9 @@ public class PlayerData
     public float timeElapsed;
     public float gameTimeElapsed;
 
-    public Dictionary<string, float> levelTimeTracker;
+    public SerializableDictionary<string, float> levelTimeTracker;
 
-    public int sceneID;
+    public string sceneID;
 
     // enemies
     public int enemiesEliminated;
@@ -18,8 +18,9 @@ public class PlayerData
     // default values
     public PlayerData()
     {
-        timeElapsed = 0;
+        timeElapsed = 356459;
         enemiesEliminated = 0;
-        levelTimeTracker = new Dictionary<string, float>();
+        sceneID = "";
+        levelTimeTracker = new SerializableDictionary<string, float>();
     }
 }

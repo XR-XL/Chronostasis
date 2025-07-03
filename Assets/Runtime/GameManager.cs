@@ -54,4 +54,13 @@ public class GameManager : MonoBehaviour
         enemiesKilled += count;
     }
 
+    // Level finished
+
+    public bool levelCompleted = false;
+
+    public void UpdateLevelCompleted(bool completeStatus) 
+    {
+        levelCompleted = completeStatus;
+    }
+
 }
