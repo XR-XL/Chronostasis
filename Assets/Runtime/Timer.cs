@@ -4,8 +4,12 @@ using TMPro;
 public class Timer : MonoBehaviour, IDataPersistence
 {
     [SerializeField] TextMeshProUGUI timerText;
+    [Space]
+    public string id;
     public float elapsedTime;
     public float gameTime;
+
+    private bool levelCompleted;
 
     // Update is called once per frame
     void FixedUpdate()
@@ -34,14 +38,14 @@ public class Timer : MonoBehaviour, IDataPersistence
 
     public void LoadData(PlayerData data)
     {
-        this.elapsedTime = data.timeElapsed;
-        this.gameTime = data.gameTimeElapsed;
+
     }
 
-    public void SaveData(ref PlayerData data) 
+    public void SaveData(ref PlayerData data)
     {
-        data.timeElapsed = Mathf.Max(data.timeElapsed, this.elapsedTime);
-        data.gameTimeElapsed = Mathf.Max(data.gameTimeElapsed, this.gameTime);
+        data.timeElapsed = Mathf.Min(data.timeElapsed, this.elapsedTime);
+        data.gameTimeElapsed = Mathf.Min(data.gameTimeElapsed, this.gameTime);
+        if (levelCompleted && data.timeElapsed > this.elapsedTime)
+            data.levelTimeTracker.Add(id, elapsedTime);
     }
-
 }
