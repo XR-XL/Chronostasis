@@ -2,7 +2,6 @@ using KinematicCharacterController;
 using System.Collections;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 using UnityEngine.VFX;
