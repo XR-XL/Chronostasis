@@ -34,6 +34,7 @@ public class DataPersistenceManager : MonoBehaviour
         if (GameManager.Instance.levelCompleted)
         {
             SaveLevel();
+            LoadLevel();
         }
     }
 

@@ -13,12 +13,13 @@ public class TimeDisplay : MonoBehaviour, IDataPersistence
 
     private void OnEnable()
     {
-        UpdateText();
+        UpdateText(this.bestTime);
     }
 
-    private void UpdateText()
+    private void UpdateText(float bestTime)
     {
         elapsedTime = timer.elapsedTime;
+
 
         int completedMinutes = Mathf.FloorToInt(elapsedTime / 60);
         int completedSeconds = Mathf.FloorToInt(elapsedTime % 60);
@@ -26,13 +27,14 @@ public class TimeDisplay : MonoBehaviour, IDataPersistence
 
         int bestMinutes = Mathf.FloorToInt(bestTime / 60);
         int bestSeconds = Mathf.FloorToInt(bestTime % 60);
-        bestTimerText.text = "Best time:" + string.Format("{0:00}:{1:00}", bestMinutes, bestSeconds);
+        bestTimerText.text = "Best time: " + string.Format("{0:00}:{1:00}", bestMinutes, bestSeconds);
     }
 
     public void LoadData(PlayerData data)
     {
-        
-        bestTime = data.timeElapsed;
+        data.levelTimeTracker.TryGetValue(SceneManager.GetActiveScene().name, out float bestTimeSaved);
+        this.bestTime = bestTimeSaved;
+        UpdateText(this.bestTime);
     }
 
     public void SaveData(ref PlayerData data)
