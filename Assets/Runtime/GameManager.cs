@@ -45,5 +45,13 @@ public class GameManager : MonoBehaviour
         gamePaused = GameIsPaused;
     }
 
+    // Enemies eliminated 
+
+    public int enemiesKilled = 0;
+
+    public void UpdateEliminationCount(int count)
+    {
+        enemiesKilled += count;
+    }
 
 }

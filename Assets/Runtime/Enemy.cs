@@ -29,6 +29,7 @@ public class Enemy : MonoBehaviour
 
     void killEnemy()
     {
+        GameManager.Instance.UpdateEliminationCount(1);
         Destroy(gameObject);
     }
 }
